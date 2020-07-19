@@ -1,26 +1,26 @@
 #! /bin/bash
 
 ####################################################################################
-####																			####
-#### Detalle:																	####
-#### 	Shell que se encarga de realizar la administración de los productos 	####
-#### 	de HND de la flaca, esta shell se encarga de realizar la creación de	####
-#### 	productos, adición de inventario y descargue de ventas.					####
-####																			####
-#### Autor:																		####
-####	Juan José Arango Diaz													####
-####																			####
+####                                                                            ####
+#### Detalle:                                                                   ####
+####    Shell que se encarga de realizar la administración de los productos     ####
+####    de HND de la flaca, esta shell se encarga de realizar la creación de    ####
+####    productos, adición de inventario y descargue de ventas.                 ####
+####                                                                            ####
+#### Autor:                                                                     ####
+####    Juan José Arango Diaz                                                   ####
+####                                                                            ####
 #### Versiones:																	####
-####	=====================================================================	####
-####	| # Versión	|		Fecha	|				Detalle					|	####
-####	=====================================================================	####
-####	|	1.0		|	17-07-2020	| Operaciones creadas:					|	####
-####	|			|				|	* Validar inventario 				|	####
-####	|			|				|	* Creación de producto 				|	####
-####	|			|				|	* Agregar inventario 				|	####
-####	|			|				|	* Disminuir Inventario 				|	####
-####	=====================================================================	####
-####																			####
+####    =====================================================================   ####
+####    | # Versión |     Fecha     |             Detalle                   |   ####
+####    =====================================================================   ####
+####    |	1.0		|	17-07-2020	| Operaciones creadas:                  |   ####
+####    |			|				|   * Validar inventario                |   ####
+####    |			|				|   * Creación de producto              |   ####
+####    |			|				|   * Agregar inventario                |   ####
+####    |			|				|   * Disminuir Inventario              |   ####
+####    =====================================================================   ####
+####                                                                            ####
 ####################################################################################
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -143,7 +143,7 @@ fun_TerminarEjecucion(){
 	#-----------------------------------------------------------	
 	echo " "
 	echo "-------------------------------------------------------------------"
-	echo " Shell finalizada con exito. Hasta Pronto!"
+	echo " Ejecucion terminada. Hasta Pronto!"
 	echo " Fecha fin proceso " $dia " " $hora
 	echo "-------------------------------------------------------------------"
 	exit 0
@@ -153,7 +153,30 @@ fun_TerminarEjecucion(){
 #	Función que realiza la creación de las categorias
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_CrearCategoria(){
-	echo "fun_CrearCategoria"
+	#============================================
+	# Creación del archivo categorias
+	#============================================
+	if [ ! -f $Categorias ];
+	then
+		touch $Categorias
+		chmod 775 $Categorias
+	fi
+	echo "	=================================================================="
+	echo " 		A continuación deberas ingresar las categorias"
+	echo "		que necesites para administrar tus productos."
+	echo "		Una vez hayas finalizado de ingresar las "
+	echo "		categorias escribe la palabra <<SALIR>>"
+	echo "	=================================================================="
+	nomCategoria="a"
+	while [[ "$nomCategoria" != "SALIR" ]]
+	do
+		read -p "		Ingrese el nombre de la categoria: " nomCategoria
+		nomCategoria=$(echo "$nomCategoria" | tr '[:lower:]' '[:upper:]')
+		if [ "$nomCategoria" != "SALIR" ];
+		then 
+			echo $nomCategoria>>$Categorias
+		fi
+	done
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -193,27 +216,7 @@ fun_CrearProducto(){
 	#============================================
 	# Creación del archivo categorias
 	#============================================
-	if [ ! -f $Categorias ];
-	then
-		touch $Categorias
-		chmod 775 $Categorias
-		echo "	=================================================================="
-		echo " 		A continuación deberas ingresar las categorias"
-		echo "		que necesites para administrar tus productos."
-		echo "		Una vez hayas finalizado de ingresar las "
-		echo "		categorias escribe la palabra <<SALIR>>"
-		echo "	=================================================================="
-		nomCategoria="a"
-		while [[ "$nomCategoria" != "SALIR" ]]
-		do
-			read -p "		Ingrese el nombre de la categoria: " nomCategoria
-			nomCategoria=$(echo "$nomCategoria" | tr '[:lower:]' '[:upper:]')
-			if [ "$nomCategoria" != "SALIR" ];
-			then 
-				echo $nomCategoria>>$Categorias
-			fi
-		done
-	fi
+	fun_CrearCategoria
 
 	#============================================
 	# Selección de la categoria
