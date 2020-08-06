@@ -27,11 +27,11 @@
 #	Función que realiza el proceso de Login
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_ValidarUsuario(){
-	echo "		================================================"
-	echo "			Sistema de inventario - Login"
-	echo "		================================================"
-	read -p "			Usuario: " strUsuario 
-	read -p "			Contraseña:" strPass
+	echo -e "\e[34m		================================================"
+	echo -e "\e[39m			Sistema de inventario - Login"
+	echo -e "\e[34m		================================================\e[39m"
+	read -p $'			\e[92mUsuario:\e[39m ' strUsuario 
+	read -p $'			\e[92mContraseña:\e[39m ' strPass
 	while IFS= read -r linea
 	do
 		indUsuarioVal=0
@@ -41,7 +41,7 @@ fun_ValidarUsuario(){
 		then
 			indUsuarioVal=1
 		fi
-	done < $Usuarios
+	done < $txtUsuarios
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -50,51 +50,51 @@ fun_ValidarUsuario(){
 fun_MenuPrincipal() {
 	pasoF=$1
 	while [[ "$pasoF" -lt "0" ||" $pasoF" -gt "10" ]]
-	do	
+	do
 		echo " "
 		#-----------------------------------------------------------
 		#Validación de opción no valida
 		#-----------------------------------------------------------
 		if [ "$pasoF" != "-1" ];
 		then
-			echo "	-------------------------------------"
-			echo "	Opción $pasoF NO es valida "
-			echo "	-------------------------------------"
+			echo -e "\e[91m	-------------------------------------"
+			echo -e "\e[91m	Opción $pasoF NO es valida "
+			echo -e "\e[91m	-------------------------------------\e[39m"
 		fi
 		
 		#-----------------------------------------------------------
 		#Impresión de funciones
 		#---------------------------------------------------------
-		echo "	=================================================================="
-		echo "		Opciones de ejecución: "
-		echo "			*******************************"
-		echo "				CATEGORÍAS"
-		echo "			*******************************"
-		echo "				1. Crear Categorías"
-		echo "				2. Editar Categorías"
-		echo "				3. Eliminar Categorías"
-		echo "				4. Consultar Categorías"
-		echo "			*******************************"
-		echo "				PRODUCTOS"
-		echo "			*******************************"
-		echo "				5. Crear Productos"
-		echo "				6. Editar Productos"
-		echo "				7. Eliminar Productos"
-		echo "				8. Consultar Productos"
-		echo "			*******************************"
-		echo "				INVENTARIO"
-		echo "			*******************************"
-		echo "				9. Agregar inventario"
-		echo "				10. Disminuir inventario"
-		echo "			*******************************"
-		echo "				ADMINISTRACIÓN"
-		echo "			*******************************"
-		echo "				0. Cerrar aplicación"
-		echo " "
-		echo "	=================================================================="
-		read -p "		Ingrese opción: " pasoF	
-		echo "	=================================================================="
-		echo " "
+		echo -e "\e[34m	============================================================"
+		echo -e "\e[39m"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[39m			CATEGORÍAS"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[92m		1. \e[39mCrear Categorías"
+		echo -e "\e[92m		2. \e[39mEditar Categorías"
+		echo -e "\e[92m		3. \e[39mEliminar Categorías"
+		echo -e "\e[92m		4. \e[39mConsultar Categorías"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[39m			PRODUCTOS"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[92m		5. \e[39mCrear Productos"
+		echo -e "\e[92m		6. \e[39mEditar Productos"
+		echo -e "\e[92m		7. \e[39mEliminar Productos"
+		echo -e "\e[92m		8. \e[39mConsultar Productos"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[39m			INVENTARIO"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[92m		9. \e[39mAgregar inventario"
+		echo -e "\e[92m		10. \e[39mDisminuir inventario"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[39m			ADMINISTRACIÓN"
+		echo -e "\e[34m		*******************************"
+		echo -e "\e[92m		0. \e[39mCerrar aplicación"
+		echo -e " "
+		echo -e "\e[34m	============================================================\e[39m"
+		read -p $'		\e[92mIngrese opción:\e[39m ' pasoF	
+		echo -e "\e[34m	============================================================\e[39m"
+		echo -e " "
 	done
 	paso=$pasoF
 	case $paso in 
@@ -128,11 +128,11 @@ fun_TerminarEjecucion() {
 	#-----------------------------------------------------------
 	#Impresión del inicio de la shell
 	#-----------------------------------------------------------	
-	echo " "
-	echo "-------------------------------------------------------------------"
-	echo " Ejecución terminada. Hasta Pronto!"
-	echo " Fecha fin proceso " $dia " " $hora
-	echo "-------------------------------------------------------------------"
+	echo -e "\e[34m "
+	echo -e "\e[34m-------------------------------------------------------------------"
+	echo -e "\e[39m Ejecución terminada. Hasta Pronto!"
+	echo -e "\e[39m Fecha fin proceso " $dia " " $hora
+	echo -e "\e[34m-------------------------------------------------------------------\e[39m"
 	exit 0
 }
 
@@ -143,20 +143,20 @@ fun_CrearCategoria(){
 	#============================================
 	# Creación del archivo categorías
 	#============================================
-	if [ ! -f $Categorias ];
+	if [ ! -f $txtCategorias ];
 	then
-		touch $Categorias
-		chmod 775 $Categorias
+		touch $txtCategorias
+		chmod 775 $txtCategorias
 	fi
-	echo "	=================================================================="
-	echo "		Una vez hayas finalizado de ingresar las "
-	echo "		categorías escribe la palabra <<SALIR>>"
-	echo "	=================================================================="
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		Una vez hayas finalizado de ingresar las "
+	echo -e "\e[39m		categorías escribe la palabra \e[92m<<SALIR>>"
+	echo -e "\e[34m	==================================================================\e[39m"
 	nomCategoria=""
 	while [[ "$nomCategoria" != "SALIR" ]]
 	do
-		echo "		-------------------------------"
-		read -p "		Nombre: " nomCategoria
+		echo -e "\e[34m		-------------------------------\e[39m"
+		read -p $'		\e[92mNombre:\e[39m ' nomCategoria
 		nomCategoria=$(echo "$nomCategoria" | tr '[:lower:]' '[:upper:]')
 		cantEspacios=$(echo ${#nomCategoria})
 		if [ $cantEspacios -le $longNomCategoria ];
@@ -167,29 +167,30 @@ fun_CrearCategoria(){
 				fun_BuscarCategoria "$nomCategoria"
 				if [ $indExisteCate = 0 ];
 				then
-					codCategoria=$(cat $Categorias | wc -l)
+					codCategoria=$(cat $txtCategorias | wc -l)
 					codCategoria=$((codCategoria+1))
 					#=================================
 					# Construcción Categoria
 					# codCat;nombre;activo
 					#=================================
 					strFinCategoria=$codCategoria";"$nomCategoria";1"
-					echo $strFinCategoria>>$Categorias
+					echo $strFinCategoria>>$txtCategorias
+					fun_RegistrarLog "1" "$strFinCategoria"
 				else
-					echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
-					echo "			La categoría ya se encuentra registrada"
-					echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+					echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+					echo -e "\e[39m			La categoría ya se encuentra registrada"
+					echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\e[39m"
 				fi
 			fi
 		else
-			echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
-			echo "			La longitud máxima son $longNomCategoria caracteres"
-			echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+			echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+			echo -e "\e[39m			La longitud máxima son \e[91m$longNomCategoria\e[39m caracteres"
+			echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
 		fi
 	done
-	echo "		**************************************************"
-	echo "			Categorías registradas con exito"
-	echo "		**************************************************"
+	echo -e "\e[92m		**************************************************"
+	echo -e "\e[39m			Categorías registradas con exito"
+	echo -e "\e[92m		**************************************************\e[39m"	
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -199,23 +200,24 @@ fun_EditarCategoria(){
 	fun_SeleccionarCategoria
 	if [ $swExiste = 1 ];
 	then
-		strNomViejo=$(cat $Categorias | sed -n $cat_Cod"p")
+		strNomViejo=$(cat $txtCategorias | sed -n $cat_Cod"p")
 		strNomViejoUni=$(cut -d ';' -f2 <<<"$strNomViejo")
-		echo " "
-		echo "		------------------------------------------"
-		echo "		Nombre anterior: "$strNomViejoUni
-		read -p "		Nombre Nuevo: " strNomNuevo
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------\e[39m"
+		echo -e "\e[92m		Nombre anterior: \e[39m"$strNomViejoUni
+		read -p $'\e[92m		Nombre Nuevo: \e[39m' strNomNuevo
 		strNomNuevo=$(echo "$strNomNuevo" | tr '[:lower:]' '[:upper:]')
 		strNomNuevo=$cat_Cod";"$strNomNuevo";1"
-		echo$(sed -i 's/'$strNomViejo'/'$strNomNuevo'/g' $Categorias)
-		echo " "
-		echo "		**************************************************"
-		echo "			Categoría editada con éxito"
-		echo "		**************************************************"
+		echo $(sed -i 's/'$strNomViejo'/'$strNomNuevo'/g' $txtCategorias)
+		fun_RegistrarLog "2" "OLD:$strNomViejo-NEW:$strNomNuevo"
+		echo -e "\e[92m "
+		echo -e "\e[92m		**************************************************"
+		echo -e "\e[39m			Categoría editada con éxito"
+		echo -e "\e[92m		**************************************************\e[39m"
 
 	fi
 	echo " "
-	read -p "		Presiona la tecla ENTER para continuar... " a
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -225,34 +227,35 @@ fun_EliminarCategoria(){
 	fun_SeleccionarCategoria
 	if [ $swExiste = 1 ];
 	then
-		strNomViejo=$(cat $Categorias | sed -n $cat_Cod"p")
+		strNomViejo=$(cat $txtCategorias | sed -n $cat_Cod"p")
 		indExisteProd=0
 		fun_BuscarProductoCategoria "$cat_Cod"
 		if [ $indExisteProd = 1 ];
 		then 
-			echo " "
-			echo "			¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬"
-			echo "			Existen productos asociados a la categoría seleccionada"
-			echo "			¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬"
+			echo -e "\e[93m "
+			echo -e "\e[93m			¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬"
+			echo -e "\e[39m			Existen productos asociados a la categoría seleccionada"
+			echo -e "\e[93m			¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬\e[39m"
 		fi 
 		respuesta="Q"
 		while [[ "$respuesta" != "S" && "$respuesta" != "N" ]]
 		do
-			read -p "		¿Desea eliminar la categoria [S|N]? " respuesta
+			read -p $'		¿Desea eliminar la categoria? \e[92m[S|N]\e[39m: ' respuesta
 			respuesta=$(echo "$respuesta" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ "$respuesta" = "S" ];
 		then
 			nomCategoria="$(cut -d ';' -f2 <<<"$strNomViejo")"
 			strNomNuevo=$cat_Cod";"$nomCategoria";0"
-			echo $(sed -i 's/'$strNomViejo'/'$strNomNuevo'/g' $Categorias)
-			echo "			**************************************************"
-			echo "				Se elimina la categoría <<$nomCategoria>>"
-			echo "			**************************************************"
+			echo $(sed -i 's/'$strNomViejo'/'$strNomNuevo'/g' $txtCategorias)
+			fun_RegistrarLog "3" "$strNomNuevo"
+			echo -e "\e[92m			**************************************************"
+			echo -e "\e[39m				Se elimina la categoría <<$nomCategoria>>"
+			echo -e "\e[92m			**************************************************\e[39m"
 		fi
 	fi
 	echo " "
-	read -p "		Presiona la tecla ENTER para continuar... " a
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -261,7 +264,7 @@ fun_EliminarCategoria(){
 fun_ConsultarCategoria(){
 	fun_ListarCategorias
 	echo " "
-	read -p "		Presiona la tecla ENTER para continuar... " a
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -271,16 +274,16 @@ fun_CrearProducto(){
 	#============================================
 	# Creación del archivo de productos
 	#============================================
-	if [ ! -f $Productos ];
+	if [ ! -f $txtProductos ];
 	then
-		touch $Productos
-		chmod 775 $Productos
+		touch $txtProductos
+		chmod 775 $txtProductos
 	fi
 
 	#============================================
 	# Creación del archivo categorías
 	#============================================
-	if [ ! -f $Categorias ];
+	if [ ! -f $txtCategorias ];
 	then
 		fun_CrearCategoria
 	fi
@@ -288,31 +291,31 @@ fun_CrearProducto(){
 	#============================================
 	# Selección de la categoria
 	#============================================
-	echo " 	"
-	echo "	=================================================================="
-	echo "		PASO 1. Categorías disponibles"
-	echo "	=================================================================="
+	echo -e "\e[34m 	"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		PASO 1. Categorías disponibles"
+	echo -e "\e[34m	==================================================================\e[39m"
 	fun_SeleccionarCategoria
 
 	#============================================
 	# Selección del genero
 	#============================================
-	echo " 	"
-	echo "	=================================================================="
-	echo "		PASO 2. Selecciona el género"
-	echo "	=================================================================="
+	echo -e "\e[34m 	"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		PASO 2. Selecciona el género"
+	echo -e "\e[34m	==================================================================\e[39m"
 	strGenero="Q"
 	while [[ "$strGenero" != "H" && "$strGenero" != "M" && "$strGenero" != "U" ]]
 	do
 		if [ "$strGenero" != "Q" ];
 		then
-			echo "		-------------------------------------"
-			echo "		Opción $strGenero NO es valida "
-			echo "		-------------------------------------"
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Opción $strGenero NO es valida "
+			echo -e "\e[91m		-------------------------------------\e[39m"
 		fi
-		echo "		(H) HOMBRE"
-		echo "		(M) MUJER"
-		echo "		(U) UNISEX"
+		echo -e "\e[92m		(H) \e[39mHOMBRE"
+		echo -e "\e[92m		(M) \e[39mMUJER"
+		echo -e "\e[92m		(U) \e[39mUNISEX"
 		read -p "		Ingresa la letra del género: " strGenero
 		strGenero=$(echo $strGenero | tr '[:lower:]' '[:upper:]')
 	done
@@ -320,29 +323,29 @@ fun_CrearProducto(){
 	#============================================
 	# Datos basicos del producto
 	#============================================
-	echo " 	"
-	echo "	=================================================================="
-	echo "		PASO 3. Datos basicos del producto"
-	echo "	=================================================================="
+	echo -e "\e[34m 	"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		PASO 3. Datos basicos del producto"
+	echo -e "\e[34m	==================================================================\e[39m"
 	#--------------------------------------------
 	#	Código del producto
 	#--------------------------------------------
 	cantEspacios=$((longCodigo+5))
 	while [[ $cantEspacios -gt $longCodigo ]]
 	do
-		read -p "		Código: " strCodigo
+		read -p $'\e[92m		Código:\e[39m ' strCodigo
 		if [  ! "$strCodigo"  ];
 		then
-			echo "		-------------------------------------"
-			echo "		Debes ingresar un código"
-			echo "		-------------------------------------"
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un código"
+			echo -e "\e[91m		-------------------------------------\e[39m"
 		else
 			cantEspacios=$(echo ${#strCodigo})
 			if [ $cantEspacios -gt $longCodigo ];
 			then
-					echo "		-------------------------------------"
-					echo "		La longitud máxima son $longCodigo caracteres"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+					echo -e "\e[91m		-------------------------------------"
 			fi
 		fi
 	done
@@ -353,20 +356,20 @@ fun_CrearProducto(){
 	cantEspacios=$((longNomProducto+5))
 	while [[ $cantEspacios -gt $longNomProducto ]]
 	do
-		read -p "		Nombre: " strNomProducto
+		read -p $'\e[92m		Nombre: \e[39m' strNomProducto
 		strNomProducto=$(echo $strNomProducto | tr '[:lower:]' '[:upper:]')
 		if [  ! "$strNomProducto"  ];
 		then
-			echo "		-------------------------------------"
-			echo "		Debes ingresar un nombre"
-			echo "		-------------------------------------"
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un nombre"
+			echo -e "\e[91m		-------------------------------------\e[39m"
 		else
 			cantEspacios=$(echo ${#strNomProducto})
 			if [ $cantEspacios -gt $longNomProducto ];
 			then
-					echo "		-------------------------------------"
-					echo "		La longitud máxima son $longNomProducto caracteres"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+					echo -e "\e[91m		-------------------------------------"
 			fi
 		fi
 	done
@@ -377,19 +380,19 @@ fun_CrearProducto(){
 	cantEspacios=$((longVlrCompra+5))
 	while [[ $cantEspacios -gt $longVlrCompra || "$strValCompra" -lt "$valMinimo" ]]
 	do
-		read -p "		Valor Compra: " strValCompra
+		read -p $'\e[92m		Valor Compra: \e[39m' strValCompra
 		if [[ ! "$strValCompra" || "$strValCompra" -lt "$valMinimo" ]];
-		then 
-			echo "		-------------------------------------"
-			echo "		Debes ingresar un valor y >= a $valMinimo"
-			echo "		-------------------------------------"	
+		then
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un valor y >= a \e[91m$valMinimo"
+			echo -e "\e[91m		-------------------------------------\e[39m"	
 		else
 			cantEspacios=$(echo ${#strValCompra})
 			if [ $cantEspacios -gt $longVlrCompra ];
 			then
-					echo "		-------------------------------------"
-					echo "		La longitud máxima son $longVlrCompra caracteres"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+					echo -e "\e[91m		-------------------------------------"
 			fi
 		fi
 	done
@@ -400,19 +403,19 @@ fun_CrearProducto(){
 	cantEspacios=$((longVlrVenta+5))
 	while [[ $cantEspacios -gt $longVlrVenta || "$strValVenta" -lt "$strValCompra" ]]
 	do
-		read -p "		Valor Venta: " strValVenta
+		read -p $'\e[92m		Valor Venta: \e[39m' strValVenta
 		if [[ ! "$strValVenta" || "$strValVenta" -lt "$strValCompra" ]];
-		then 
-			echo "		-------------------------------------"
-			echo "		Debes ingresar un valor y >= a $strValCompra"
-			echo "		-------------------------------------"
+		then			
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un valor y >= a \e[91m$valMinimo"
+			echo -e "\e[91m		-------------------------------------\e[39m"
 		else
 			cantEspacios=$(echo ${#strValVenta})
 			if [ $cantEspacios -gt $longVlrVenta ];
 			then
-					echo "		-------------------------------------"
-					echo "		La longitud máxima son $longVlrVenta   caracteres"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+					echo -e "\e[91m		-------------------------------------"
 			fi
 		fi
 	done
@@ -426,14 +429,15 @@ fun_CrearProducto(){
 	fun_BuscarProductoCodigo "$strCodigo"
 	if [ $indExisteProd = 0 ];
 	then
-		echo $strFinProducto>>$Productos
-		echo "		**************************************************"
-		echo "			Producto registrado con éxito"
-		echo "		**************************************************"
+		echo $strFinProducto>>$txtProductos
+		fun_RegistrarLog "4" "$strFinProducto"
+		echo -e "\e[92m		**************************************************"
+		echo -e "\e[39m			Producto registrado con éxito"
+		echo -e "\e[92m		**************************************************\e[39m"
 	else
-		echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
-		echo "			El producto ya se encuentra registrado"
-		echo "		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+		echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+		echo -e "\e[39m			El producto ya se encuentra registrado"
+		echo -e "\e[91m		{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\e[39m"
 	fi
 	unset strCodCategoria
 	unset strNomProducto
@@ -456,114 +460,113 @@ fun_EditarProducto(){
 		strNewVlrCompra=$prd_genero
 		strNewVlrVenta=$prd_valVenta
 		
-		echo " "
-		echo "		------------------------------------------"
-		echo "				Categoría"
-		echo "		------------------------------------------"
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------"
+		echo -e "\e[39m				Categoría"
+		echo -e "\e[34m		------------------------------------------\e[39m"
 		while [[ "$RespCategoria" != "S" && "$RespCategoria" != "N" ]]
 		do
-			read -p "		¿Dese editar la categoría? [S|N] " RespCategoria
+			read -p $'		¿Dese editar la categoría? \e[92m[S|N]\e[39m: ' RespCategoria
 			RespCategoria=$(echo "$RespCategoria" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ $RespCategoria = "S" ];
 		then 
-			echo "		Actual: "$prd_nomCat
+			echo -e "\e[92m		Actual: \e[39m"$prd_nomCat
 			fun_SeleccionarCategoria
 			strNewCategoria=$strOrden
 		fi
 		
-		echo " "
-		echo "		------------------------------------------"
-		echo "				Nombre"
-		echo "		------------------------------------------"
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------"
+		echo -e "\e[39m				Nombre"
+		echo -e "\e[34m		------------------------------------------\e[39m"
 		while [[ "$RespNombre" != "S" && "$RespNombre" != "N" ]]
 		do
-			read -p "		¿Dese editar el nombre? [S|N] " RespNombre
+			read -p $'		¿Dese editar el nombre? \e[92m[S|N]\e[39m: ' RespNombre
 			RespNombre=$(echo "$RespNombre" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ $RespNombre = "S" ];
 		then 
-			echo "		Actual: "$prd_nombre
-			
+			echo -e "\e[92m		Actual: \e[39m"$prd_nombre
 			cantEspacios=$((longNomProducto+5))
 			while [[ $cantEspacios -gt $longNomProducto ]]
 			do
-				read -p "		Nuevo: " strNewNombre
+				read -p $'		\e[92mNuevo:\e[39m ' strNewNombre
 				strNewNombre=$(echo $strNewNombre | tr '[:lower:]' '[:upper:]')
 				if [  ! "$strNewNombre"  ];
 				then
-					echo "		-------------------------------------"
-					echo "		Debes ingresar un nombre"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		Debes ingresar un nombre"
+					echo -e "\e[91m		-------------------------------------\e[39m"
 				else
 					cantEspacios=$(echo ${#strNewNombre})
 					if [ $cantEspacios -gt $longNomProducto ];
 					then
-							echo "		-------------------------------------"
-							echo "		La longitud máxima son $longNomProducto caracteres"
-							echo "		-------------------------------------"
+							echo -e "\e[91m		-------------------------------------"
+							echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+							echo -e "\e[91m		-------------------------------------"
 					fi
 				fi
 			done
 		fi
 
-		echo " "
-		echo "		------------------------------------------"
-		echo "				Género"
-		echo "		------------------------------------------"
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------"
+		echo -e "\e[39m				Género"
+		echo -e "\e[34m		------------------------------------------\e[39m"
 		while [[ "$RespGenero" != "S" && "$RespGenero" != "N" ]]
 		do
-			read -p "		¿Dese editar el género? [S|N] " RespGenero
+			read -p $'		¿Dese editar el género? \e[92m[S|N]\e[39m: ' RespGenero
 			RespGenero=$(echo "$RespGenero" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ $RespGenero = "S" ];
 		then 
-			echo "		Actual: "$prd_genero
+			echo -e "\e[92m		Actual: \e[39m"$prd_genero
 			strNewGenero="Q"
 			while [[ "$strNewGenero" != "H" && "$strNewGenero" != "M" && "$strNewGenero" != "U" ]]
 			do
 				if [ "$strNewGenero" != "Q" ];
 				then
-					echo "		-------------------------------------"
-					echo "		Opción $strNewGenero NO es valida "
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		Opción $strNewGenero NO es valida "
+					echo -e "\e[91m		-------------------------------------\e[39m"
 				fi
-				echo "		(H) HOMBRE"
-				echo "		(M) MUJER"
-				echo "		(U) UNISEX"
+				echo -e "\e[92m		(H)\e[39m HOMBRE"
+				echo -e "\e[92m		(M)\e[39m MUJER"
+				echo -e "\e[92m		(U)\e[39m UNISEX"
 				read -p "		Ingresa la letra del género: " strNewGenero
 				strNewGenero=$(echo $strNewGenero | tr '[:lower:]' '[:upper:]')
 			done
 		fi
 
-		echo " "
-		echo "		------------------------------------------"
-		echo "				Valor Compra"
-		echo "		------------------------------------------"
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------"
+		echo -e "\e[39m				Valor Compra"
+		echo -e "\e[34m		------------------------------------------\e[39m"
 		while [[ "$RespVlrCompra" != "S" && "$RespVlrCompra" != "N" ]]
 		do
-			read -p "		¿Dese editar el valor de compra? [S|N] " RespVlrCompra
+			read -p $'		¿Dese editar el valor de compra? \e[92m[S|N]\e[39m: ' RespVlrCompra
 			RespVlrCompra=$(echo "$RespVlrCompra" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ $RespVlrCompra = "S" ];
 		then 
-			echo "		Actual: "$prd_valCompra
+			echo -e "\e[92m		Actual: \e[39m"$prd_valCompra
 			cantEspacios=$((longVlrCompra+5))
 			while [[ $cantEspacios -gt $longVlrCompra || "$strNewVlrCompra" -lt "$valMinimo" ]]
 			do
-				read -p "		Valor Compra: " strNewVlrCompra
+				read -p $'\e[92m		Valor Compra: \e[39m' strNewVlrCompra
 				if [[ ! "$strNewVlrCompra" || "$strNewVlrCompra" -lt "$valMinimo" ]];
 				then 
-					echo "		-------------------------------------"
-					echo "		Debes ingresar un valor y >= a $valMinimo"
-					echo "		-------------------------------------"	
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		Debes ingresar un valor y >= a \e[91m$valMinimo"
+					echo -e "\e[91m		-------------------------------------\e[39m"	
 				else
 					cantEspacios=$(echo ${#strNewVlrCompra})
 					if [ $cantEspacios -gt $longVlrCompra ];
 					then
-							echo "		-------------------------------------"
-							echo "		La longitud máxima son $longVlrCompra caracteres"
-							echo "		-------------------------------------"
+							echo -e "\e[91m		-------------------------------------"
+							echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+							echo -e "\e[91m		-------------------------------------"
 					fi
 				fi
 			done
@@ -571,34 +574,34 @@ fun_EditarProducto(){
 			strNewVlrCompra=$prd_valCompra
 		fi
 
-		echo " "
-		echo "		------------------------------------------"
-		echo "				Valor Venta"
-		echo "		------------------------------------------"
+		echo -e "\e[34m "
+		echo -e "\e[34m		------------------------------------------"
+		echo -e "\e[39m				Valor Venta"
+		echo -e "\e[34m		------------------------------------------\e[39m"
 		while [[ "$RespVlrVenta" != "S" && "$RespVlrVenta" != "N" ]]
 		do
-			read -p "		¿Dese editar el valor de venta? [S|N] " RespVlrVenta
+			read -p $'		¿Dese editar el valor de venta? \e[92m[S|N]\e[39m: ' RespVlrVenta
 			RespVlrVenta=$(echo "$RespVlrVenta" | tr '[:lower:]' '[:upper:]')
 		done
 		if [ $RespVlrVenta = "S" ];
 		then
-			echo "		Actual: "$prd_valVenta
+			echo -e "\e[92m		Actual: \e[39m"$prd_valVenta
 			cantEspacios=$((longVlrVenta+5))
 			while [[ $cantEspacios -gt $longVlrVenta || "$strNewVlrVenta" -lt "$strNewVlrCompra" ]]
 			do
-				read -p "		Valor Venta: " strNewVlrVenta
+				read -p $'\e[92m		Valor Venta: \e[39m' strNewVlrVenta
 				if [[ ! "$strNewVlrVenta" || "$strNewVlrVenta" -lt "$strNewVlrCompra" ]];
 				then 
-					echo "		-------------------------------------"
-					echo "		Debes ingresar un valor y >= a $strNewVlrCompra"
-					echo "		-------------------------------------"
+					echo -e "\e[91m		-------------------------------------"
+					echo -e "\e[39m		Debes ingresar un valor y >= a \e[91m$strNewVlrCompra"
+					echo -e "\e[91m		-------------------------------------\e[39m"
 				else
 					cantEspacios=$(echo ${#strNewVlrVenta})
 					if [ $cantEspacios -gt $longVlrVenta ];
 					then
-							echo "		-------------------------------------"
-							echo "		La longitud máxima son $longVlrVenta   caracteres"
-							echo "		-------------------------------------"
+							echo -e "\e[91m		-------------------------------------"
+							echo -e "\e[39m		La longitud máxima son \e[91m$longCodigo\e[39m caracteres"
+							echo -e "\e[91m		-------------------------------------"
 					fi
 				fi
 			done
@@ -606,13 +609,12 @@ fun_EditarProducto(){
 
 		strProdActual=$strProducto
 		strProdNuevo=$prd_Cod";"$strNewCategoria";"$strNewNombre";"$strNewGenero";"$prd_cantidad";"$strNewVlrCompra";"$strNewVlrVenta";1"
-		echo "Actual: "$strProdActual
-		echo "Nuevo: "$strProdNuevo
-		echo $(sed -i s/$strProdActual/$strProdNuevo/g $Productos)
+		echo $(sed -i s/$strProdActual/$strProdNuevo/g $txtProductos)
+		fun_RegistrarLog "5" "OLD:$strProdActual-NEW:$strProdNuevo"
 		echo " "
-		echo "		**************************************************"
-		echo "			Producto editado con éxito"
-		echo "		**************************************************"
+		echo -e "\e[92m		**************************************************"
+		echo -e "\e[39m			Producto editado con éxito"
+		echo -e "\e[92m		**************************************************\e[92m"
 		unset RespCategoria
 		unset RespNombre
 		unset RespGenero
@@ -620,38 +622,390 @@ fun_EditarProducto(){
 		unset RespVlrVenta
 	fi
 	echo " "
-	read -p "		Presiona la tecla ENTER para continuar... " a
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #	Función que realiza la eliminación de los productos
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_EliminarProducto(){
-	echo "fun_EliminarProducto"
+	fun_SeleccionarProducto
+	if [ $swExiste = 1 ];
+	then
+		respuesta="Q"
+		while [[ "$respuesta" != "S" && "$respuesta" != "N" ]]
+		do
+			read -p $'		¿Desea eliminar el producto \e[92m<<$prd_nombre>>? [S|N]\e[39m: ' respuesta
+			respuesta=$(echo "$respuesta" | tr '[:lower:]' '[:upper:]')
+		done
+		if [ "$respuesta" = "S" ];
+		then
+			strProdActual=$strProducto
+			strProdNuevo=$prd_Cod";"$prd_codCat";"$prd_nombre";"$prd_genero";"$prd_cantidad";"$prd_valCompra";"$prd_valVenta";0"
+			echo $(sed -i s/$strProdActual/$strProdNuevo/g $txtProductos)
+			fun_RegistrarLog "4" "$strProdNuevo"
+			echo " "
+			echo -e "\e[92m		**************************************************"
+			echo -e "\e[39m			Producto eliminado con éxito"
+			echo -e "\e[92m		**************************************************\e[39m"
+		fi
+	fi
+	echo " "
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #	Función que realiza la consulta de los productos
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_ConsultarProducto(){
-	echo "fun_ConsultarProducto"
 	fun_ListarProductos
 	echo " "
-	read -p "		Presiona la tecla ENTER para continuar... " a
+	read -p $'		Presiona la tecla \e[92mENTER\e[39m para continuar... ' a
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #	FFunción que aumenta el inventario de un producto
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_AgregarInventario(){
-	echo "fun_AgregarInventario"
+	#============================================
+	# Creación del archivo de compras
+	#============================================
+	if [ ! -f $txtCompras ];
+	then
+		touch $txtCompras
+		chmod 775 $txtCompras
+	fi
+	fun_SeleccionarCategoria
+	strCodCategoria=$cat_Cod
+	fun_ListarProductos "$strCodCategoria"
+	echo -e "\e[93m		=================================================================="
+	echo -e "\e[39m			Registro de compra"
+	echo -e "\e[93m		==================================================================\e[39m"
+	echo -e " "
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Datos básicos"
+	echo -e "\e[93m			*********************************************"
+	echo -e "				\e[92m1. Categoría producto:\e[39m "$cat_nombre
+	cantEspacios=$((longCompra+5))
+	while [[ $cantEspacios -gt $longCompra ]]
+	do
+		read -p $'				\e[92m2. Código compra:\e[39m ' comCodCompra
+		if [  ! "$comCodCompra"  ];
+		then
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un código"
+			echo -e "\e[91m		-------------------------------------\e[39m"
+		else
+			cantEspacios=$(echo ${#comCodCompra})
+			if [ $cantEspacios -gt $longCompra ];
+			then
+					echo -e "\e[91m				-------------------------------------"
+					echo -e "\e[39m				La longitud máxima son \e[91m$longCompra\e[39m caracteres"
+					echo -e "\e[91m				-------------------------------------"
+			fi
+		fi
+	done
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Productos"
+	echo -e "\e[93m			*********************************************"
+	respProduc="S"
+	impCompra=""
+	detCompra=""
+	if [ ! -f $txtAuxiliarV ];
+	then
+		touch $txtAuxiliarV
+		chmod 775 $txtAuxiliarV
+	fi
+	if [ ! -f $txtAuxiliarB ];
+	then
+		touch $txtAuxiliarB
+		chmod 775 $txtAuxiliarB
+	fi
+	true>$txtAuxiliarB
+	while [ "$respProduc" = "S" ]
+	do
+		unset impCompra
+		unset detCompra
+		echo -e " "
+		indExisteProd=0
+		while [ $indExisteProd = 0 ]
+		do
+			read -p $'				\e[92m3. Código producto:\e[39m ' comCodProducto
+			fun_BuscarProductoCodigo "$comCodProducto"
+			if [ $indExisteProd = 0 ];
+			then
+				echo -e "\e[91m		-------------------------------------"
+				echo -e "\e[39m		Código producto \e[91m$comCodProducto\e[39m NO existe"
+				echo -e "\e[91m		-------------------------------------\e[39m"
+			fi
+		done
+		comCantCompra=0
+		while [ $comCantCompra -le 0 ]
+		do
+			read -p $'				\e[92m4. Cantidad compra:\e[39m ' comCantCompra
+			if [ $comCantCompra -le 0 ];
+			then 
+				echo -e "\e[91m				-------------------------------------"
+				echo -e "\e[39m				Cantidad Compra debe ser > a \e[91m0\e[39m"
+				echo -e "\e[91m				-------------------------------------\e[39m"
+			fi
+		done
+		echo -e " "
+		respProduc="q"
+		while [[ "$respProduc" != "S" && "$respProduc" != "N" ]]
+		do
+			read -p $'		¿Desea agregar más productos? \e[92m[S|N]\e[39m: ' respProduc
+			respProduc=$(echo "$respProduc" | tr '[:lower:]' '[:upper:]')
+		done
+		
+		cantEspacios=$(echo ${#comCodCompra})
+		cantEspacios=$((longCompra-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impCompra=$impCompra$(echo "\e[34m|\e[39m"$comCodCompra"\e[39m"$strEspacios"\e[34m|\e[39m")
+		detCompra=$comCodCompra";"
+
+		cantEspacios=$(echo ${#cat_nombre})
+		cantEspacios=$((longNomCategoria-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impCompra=$impCompra$(echo $cat_nombre$strEspacios"\e[34m|\e[39m")
+		detCompra=$detCompra$strCodCategoria";"
+
+		cantEspacios=$(echo ${#prd_nombre})
+		cantEspacios=$((longNomProducto-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impCompra=$impCompra$(echo $prd_nombre$strEspacios"\e[34m|\e[39m")
+		detCompra=$detCompra$prd_Cod";"
+
+		cantEspacios=$(echo ${#comCantCompra})
+		cantEspacios=$((longCantidad-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impCompra=$impCompra$(echo $comCantCompra$strEspacios"\e[34m|\e[39m")
+		detCompra=$detCompra$comCantCompra";"
+		echo $impCompra>>$txtAuxiliarV
+		echo $detCompra>>$txtAuxiliarB
+	done
+	echo -e " "
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Resumen Compra"
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "		\e[34m|\e[39m       CÓDIGO       \e[34m|\e[39m   CATEGORÍA   \e[34m|\e[39m         PRODUCTO        \e[34m|\e[39m CANTIDAD \e[34m|\e[39m"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
+	
+	while IFS= read -r linea
+	do
+		echo -e "		"$linea
+	done < $txtAuxiliarV
+
+	while IFS= read -r linea
+	do
+		codCompra="$(cut -d ';' -f1 <<<"$linea")"
+		echo $linea>>$txtCompras
+		catNomCompra="$(cut -d ';' -f2 <<<"$linea")"
+		proCodCompra="$(cut -d ';' -f3 <<<"$linea")"
+		cantCompra="$(cut -d ';' -f4 <<<"$linea")"
+		fun_BuscarProductoCodigo proCodCompra
+		
+		prd_Cod="$(cut -d ';' -f1 <<<"$lineaProducto")"
+		prd_codCat="$(cut -d ';' -f2 <<<"$lineaProducto")"
+		prd_codCat=$prd_codCat
+		prd_nomCat=$(cat $txtCategorias | sed -n $prd_codCat"p")
+		prd_nomCat="$(cut -d ';' -f2 <<<"$prd_nomCat")"
+		prd_nombre="$(cut -d ';' -f3 <<<"$lineaProducto")"
+		prd_genero="$(cut -d ';' -f4 <<<"$lineaProducto")"
+		prd_cantidad="$(cut -d ';' -f5 <<<"$lineaProducto")"
+		prd_valCompra="$(cut -d ';' -f6 <<<"$lineaProducto")"
+		prd_valVenta="$(cut -d ';' -f7 <<<"$lineaProducto")"
+		prd_activo="$(cut -d ';' -f8 <<<"$lineaProducto")"
+
+		prd_cantidad=$((prd_cantidad+cantCompra))
+
+		strProdVenta=$(echo $prd_Cod";"$prd_codCat";"$prd_nombre";"$prd_genero";"$prd_cantidad";"$prd_valCompra";"$prd_valVenta";"$prd_activo)
+		echo $(sed -i s/$lineaProducto/$strProdVenta/g $txtProductos)
+		fun_RegistrarLog "7" "$linea"
+	done < $txtAuxiliarB
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
+	echo " "
+	echo -e "\e[92m		**************************************************"
+	echo -e "\e[39m			Compra registrada con éxito"
+	echo -e "\e[92m		**************************************************\e[39m"
+
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
 #	FFunción que disminuye el inventario de un producto
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_DisminuirInventario(){
-	echo "fun_DisminuirInventario"
+	#============================================
+	# Creación del archivo de compras
+	#============================================
+	if [ ! -f $txtVentas ];
+	then
+		touch $txtVentas
+		chmod 775 $txtVentas
+	fi
+	fun_SeleccionarCategoria
+	strCodCategoria=$cat_Cod
+	fun_ListarProductos "$strCodCategoria"
+	echo -e "\e[93m		=================================================================="
+	echo -e "\e[39m			Registro de venta"
+	echo -e "\e[93m		==================================================================\e[39m"
+	echo -e " "
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Datos básicos"
+	echo -e "\e[93m			*********************************************"
+	echo -e "				\e[92m1. Categoría producto:\e[39m "$cat_nombre
+	cantEspacios=$((longCompra+5))
+	while [[ $cantEspacios -gt $longCompra ]]
+	do
+		read -p $'				\e[92m2. Cliente:\e[39m ' codCliente
+		if [  ! "$codCliente"  ];
+		then
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Debes ingresar un cliente"
+			echo -e "\e[91m		-------------------------------------\e[39m"
+		else
+			cantEspacios=$(echo ${#codCliente})
+			if [ $cantEspacios -gt $longCliente ];
+			then
+					echo -e "\e[91m				-------------------------------------"
+					echo -e "\e[39m				La longitud máxima son \e[91m$longCompra\e[39m caracteres"
+					echo -e "\e[91m				-------------------------------------"
+			fi
+		fi
+	done
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Productos"
+	echo -e "\e[93m			*********************************************"
+	respProduc="S"
+	impVenta=""
+	detVenta=""
+	if [ ! -f $txtAuxiliarV ];
+	then
+		touch $txtAuxiliarV
+		chmod 775 $txtAuxiliarV
+	fi
+	if [ ! -f $txtAuxiliarB ];
+	then
+		touch $txtAuxiliarB
+		chmod 775 $txtAuxiliarB
+	fi
+	true>$txtAuxiliarB
+	while [ "$respProduc" = "S" ]
+	do
+		unset impVenta
+		unset detVenta
+		echo -e " "
+		indExisteProd=0
+		while [ $indExisteProd = 0 ]
+		do
+			read -p $'				\e[92m3. Código producto:\e[39m ' comCodProducto
+			fun_BuscarProductoCodigo "$comCodProducto"
+			if [ $indExisteProd = 0 ];
+			then
+				echo -e "\e[91m		-------------------------------------"
+				echo -e "\e[39m		Código producto \e[91m$comCodProducto\e[39m NO existe"
+				echo -e "\e[91m		-------------------------------------\e[39m"
+			fi
+		done
+		comCantCompra=0
+		while [ $comCantCompra -le 0 ]
+		do
+			read -p $'				\e[92m4. Cantidad venta:\e[39m ' comCantCompra
+			if [ $comCantCompra -le 0 ];
+			then 
+				echo -e "\e[91m				-------------------------------------"
+				echo -e "\e[39m				Cantidad Venta debe ser > a \e[91m0\e[39m"
+				echo -e "\e[91m				-------------------------------------\e[39m"
+			fi
+		done
+		echo -e " "
+		respProduc="q"
+		while [[ "$respProduc" != "S" && "$respProduc" != "N" ]]
+		do
+			read -p $'		¿Desea vender más productos? \e[92m[S|N]\e[39m: ' respProduc
+			respProduc=$(echo "$respProduc" | tr '[:lower:]' '[:upper:]')
+		done
+		
+		cantEspacios=$(echo ${#codCliente})
+		cantEspacios=$((longCliente-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impVenta=$impVenta$(echo "\e[34m|\e[39m"$codCliente"\e[39m"$strEspacios"\e[34m|\e[39m")
+		detVenta=$codCliente";"
+
+		cantEspacios=$(echo ${#cat_nombre})
+		cantEspacios=$((longNomCategoria-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impVenta=$impVenta$(echo $cat_nombre$strEspacios"\e[34m|\e[39m")
+		detVenta=$detVenta$strCodCategoria";"
+
+		cantEspacios=$(echo ${#prd_nombre})
+		cantEspacios=$((longNomProducto-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impVenta=$impVenta$(echo $prd_nombre$strEspacios"\e[34m|\e[39m")
+		detVenta=$detVenta$prd_Cod";"
+
+		cantEspacios=$(echo ${#comCantCompra})
+		cantEspacios=$((longCantidad-cantEspacios))
+		strEspacios=""
+		funEspacios $cantEspacios
+		impVenta=$impVenta$(echo $comCantCompra$strEspacios"\e[34m|\e[39m")
+		detVenta=$detVenta$comCantCompra";"
+		echo $impVenta>>$txtAuxiliarV
+		echo $detVenta>>$txtAuxiliarB
+	done
+	echo -e " "
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[39m 			Resumen Compra"
+	echo -e "\e[93m			*********************************************"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "		\e[34m|\e[39m            CLIENTE           \e[34m|\e[39m   CATEGORÍA   \e[34m|\e[39m         PRODUCTO        \e[34m|\e[39m CANTIDAD \e[34m|\e[39m"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
+	
+	while IFS= read -r linea
+	do
+		echo -e "		"$linea
+	done < $txtAuxiliarV
+
+	while IFS= read -r linea
+	do
+		codCompra="$(cut -d ';' -f1 <<<"$linea")"
+		echo $linea>>$txtVentas
+		catNomCompra="$(cut -d ';' -f2 <<<"$linea")"
+		proCodCompra="$(cut -d ';' -f3 <<<"$linea")"
+		cantCompra="$(cut -d ';' -f4 <<<"$linea")"
+		fun_BuscarProductoCodigo proCodCompra
+		
+		prd_Cod="$(cut -d ';' -f1 <<<"$lineaProducto")"
+		prd_codCat="$(cut -d ';' -f2 <<<"$lineaProducto")"
+		prd_codCat=$prd_codCat
+		prd_nomCat=$(cat $txtCategorias | sed -n $prd_codCat"p")
+		prd_nomCat="$(cut -d ';' -f2 <<<"$prd_nomCat")"
+		prd_nombre="$(cut -d ';' -f3 <<<"$lineaProducto")"
+		prd_genero="$(cut -d ';' -f4 <<<"$lineaProducto")"
+		prd_cantidad="$(cut -d ';' -f5 <<<"$lineaProducto")"
+		prd_valCompra="$(cut -d ';' -f6 <<<"$lineaProducto")"
+		prd_valVenta="$(cut -d ';' -f7 <<<"$lineaProducto")"
+		prd_activo="$(cut -d ';' -f8 <<<"$lineaProducto")"
+
+		prd_cantidad=$((prd_cantidad-cantCompra))
+
+		strProdVenta=$(echo $prd_Cod";"$prd_codCat";"$prd_nombre";"$prd_genero";"$prd_cantidad";"$prd_valCompra";"$prd_valVenta";"$prd_activo)
+		echo $(sed -i s/$lineaProducto/$strProdVenta/g $txtProductos)
+		fun_RegistrarLog "8" "$linea"
+	done < $txtAuxiliarB
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
+	echo " "
+	echo -e "\e[92m		**************************************************"
+	echo -e "\e[39m			Venta registrada con éxito"
+	echo -e "\e[92m		**************************************************\e[39m"
 }
 
 #=================================================================================
@@ -670,9 +1024,11 @@ fun_BuscarProductoCodigo() {
 		codigo="$(cut -d ';' -f1 <<<"$linea")"
 		if [ "$strCodigo" = "$codigo" ];
 		then
+			prd_nombre="$(cut -d ';' -f3 <<<"$linea")"
 			indExisteProd=1
+			lineaProducto=$linea
 		fi
-	done < $Productos
+	done < $txtProductos
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -688,7 +1044,7 @@ fun_BuscarProductoCategoria() {
 		then
 			indExisteProd=1
 		fi
-	done < $Productos
+	done < $txtProductos
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -704,7 +1060,7 @@ fun_BuscarCategoria(){
 		then
 			indExisteCate=1
 		fi
-	done < $Categorias
+	done < $txtCategorias
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -717,18 +1073,18 @@ fun_SeleccionarCategoria(){
 	do
 		if [ "$strOrden" != "-1" ];
 		then
-			echo "		-------------------------------------"
-			echo "		Opción $strOrden NO es valida "
-			echo "		-------------------------------------"
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Opción \e[91m$strOrden\e[39m NO es valida "
+			echo -e "\e[91m		-------------------------------------\e[39m"
 		fi
 		orden=1
 		fun_ListarCategorias
 		if [ $swExiste = 1 ];
 		then
-			read -p "		Ingresa el el número de la categoría que desea: " strOrden		
+			read -p $'		Ingresa el \e[92mnúmero\e[39m de la categoría que desea: ' strOrden
 			if [[ "$strOrden" -ge "1" && "$strOrden" -le "$orden" ]];
 			then			
-				strCategoria=$(cat $Categorias | sed -n $strOrden"p")			
+				strCategoria=$(cat $txtCategorias | sed -n $strOrden"p")
 				cat_Cod="$(cut -d ';' -f1 <<<"$strCategoria")"
 				cat_nombre="$(cut -d ';' -f2 <<<"$strCategoria")"
 				swCiclo=0
@@ -742,16 +1098,16 @@ fun_SeleccionarCategoria(){
 #	categoría seleccionada
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_ListarCategorias(){
-	echo " 	"
-	echo "	=================================================================="
-	echo "		Categorías Existentes"
-	echo "	=================================================================="
-	echo " "
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	echo "		|  CÓDIGO  |   CATEGORÍA   |"
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "\e[34m 	"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		Categorías Existentes"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m "
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "		\e[34m|\e[39m  CÓDIGO  \e[34m|\e[39m   CATEGORÍA   \e[34m|\e[39m"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
 	swExiste=0
-	if [ -f $Categorias ];
+	if [ -f $txtCategorias ];
 	then
 		while IFS= read -r lineaCt
 		do
@@ -766,25 +1122,25 @@ fun_ListarCategorias(){
 				cantEspacios=$((longCodigo-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impCategorias=$impCategorias$(echo "|"$cat_Cod$strEspacios"|")
+				impCategorias=$impCategorias$(echo -e "\e[34m|\e[92m"$cat_Cod"\e[39m"$strEspacios"\e[34m|\e[39m")
 
 				cat_nombre="$(cut -d ';' -f2 <<<"$lineaCt")"
 				cantEspacios=$(echo ${#cat_nombre})
 				cantEspacios=$((longNomCategoria-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impCategorias=$impCategorias$(echo $cat_nombre$strEspacios"|")
+				impCategorias=$impCategorias$(echo -e $cat_nombre$strEspacios"\e[34m|\e[39m")
 
 				echo "		"$impCategorias	
 			fi
-		done < $Categorias
+		done < $txtCategorias
 	fi
 	if [ $swExiste = 0 ];
 	then
-		echo "		|     NO HAY CATEGORÍAS    |"
+		echo -e "		\e[34m|\e[39m     NO HAY CATEGORÍAS    \e[34m|\e[39m"
 		swCiclo=0
 	fi
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -793,27 +1149,33 @@ fun_ListarCategorias(){
 fun_SeleccionarProducto(){
 	strOrden=-1
 	swCiclo=1
+	if [ $1 ];
+	then
+		codigoCategoria=$1
+	else
+		codigoCategoria="NA"
+	fi
 	while [[ "$swCiclo" != "0" ]]
 	do
 
 		if [ "$strOrden" != "-1" ];
 		then
-			echo "		-------------------------------------"
-			echo "		Opción $strOrden NO es valida "
-			echo "		-------------------------------------"
+			echo -e "\e[91m		-------------------------------------"
+			echo -e "\e[39m		Opción \e[91m$strOrden\e[39m NO es valida "
+			echo -e "\e[91m		-------------------------------------"
 		fi
 		orden=1
-		fun_ListarProductos
-		if [ $swExiste = 1 ];
+		fun_ListarProductos "$codigoCategoria"
+		if [[ $swExiste = 1 && $contProducto -gt 0 ]];
 		then
-			read -p "		Ingresa el el numero del producto que desea: " strOrden
+			read -p $'		Ingresa el \e[92mnúmero\e[39m del producto que desea: ' strOrden
 			if [[ "$strOrden" -ge "1" && "$strOrden" -le "$orden" ]];
 			then
-				strProducto=$(cat $Productos | sed -n $strOrden"p")			
+				strProducto=$(cat $txtProductos | sed -n $strOrden"p")			
 				prd_Cod="$(cut -d ';' -f1 <<<"$strProducto")"
 				prd_codCat="$(cut -d ';' -f2 <<<"$strProducto")"
 				prd_codCat=$prd_codCat
-				prd_nomCat=$(cat $Categorias | sed -n $prd_codCat"p")
+				prd_nomCat=$(cat $txtCategorias | sed -n $prd_codCat"p")
 				prd_nomCat="$(cut -d ';' -f2 <<<"$prd_nomCat")"
 				prd_nombre="$(cut -d ';' -f3 <<<"$strProducto")"
 				prd_genero="$(cut -d ';' -f4 <<<"$strProducto")"
@@ -834,17 +1196,27 @@ fun_SeleccionarProducto(){
 #\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
 fun_ListarProductos(){
 	echo " 	"
-	echo "	=================================================================="
-	echo "		Productos Existentes"
-	echo "	=================================================================="
-	echo " "
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-	echo "		| ORD |  CÓDIGO  |   CATEGORÍA   |          NOMBRE         | GÉNERO | CANTIDAD | VLR COMPR | VLR VENTA |"
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "\e[34m	=================================================================="
+	echo -e "\e[39m		Productos Existentes"
+	echo -e "\e[34m	==================================================================\e[39m"
+	echo -e " "
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
+	echo -e "\e[34m		|\e[39m ORD \e[34m|\e[39m  CÓDIGO  \e[34m|\e[39m   CATEGORÍA   \e[34m|\e[39m          NOMBRE         \e[34m|\e[39m GÉNERO \e[34m|\e[39m CANTIDAD \e[34m|\e[39m VLR COMPR \e[34m|\e[39m VLR VENTA \e[34m|\e[39m"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
 	swExiste=0
 	orden=1
-	if [ -f $Productos ];
+	swCategoria=0
+	contProducto=0
+	if [ -f $txtProductos ];
 	then 
+		if [ $1 ];
+		then
+			if [ $1 != "NA" ];
+			then
+				codigoCategoria=$1
+				swCategoria=1
+			fi
+		fi
 		while IFS= read -r lineaCt
 		do
 			swExiste=1
@@ -860,7 +1232,7 @@ fun_ListarProductos(){
 				cantEspacios=$((5-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo "|"$orden$strEspacios"|")
+				impProducto=$impProducto$(echo -e "\e[34m|\e[92m"$orden"\e[39m"$strEspacios"\e[34m|\e[39m")
 				orden=$((orden+1))
 
 				#---------------------------------------
@@ -871,19 +1243,19 @@ fun_ListarProductos(){
 				cantEspacios=$((longCodigo-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_Cod$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_Cod$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión de la categoría
 				#---------------------------------------
 				prd_codCat="$(cut -d ';' -f2 <<<"$lineaCt")"
-				prd_nomCat=$(cat $Categorias | sed -n $prd_codCat"p")
+				prd_nomCat=$(cat $txtCategorias | sed -n $prd_codCat"p")
 				prd_nomCat="$(cut -d ';' -f2 <<<"$prd_nomCat")"
 				cantEspacios=$(echo ${#prd_nomCat})
 				cantEspacios=$((longNomCategoria-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_nomCat$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_nomCat$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión del nombre
@@ -893,7 +1265,7 @@ fun_ListarProductos(){
 				cantEspacios=$((longNomProducto-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_nombre$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_nombre$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión del genero
@@ -903,7 +1275,7 @@ fun_ListarProductos(){
 				cantEspacios=$((longGenero-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_genero$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_genero$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión de la cantidad
@@ -913,7 +1285,7 @@ fun_ListarProductos(){
 				cantEspacios=$((longCantidad-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_cantidad$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_cantidad$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión del valor compra
@@ -923,7 +1295,7 @@ fun_ListarProductos(){
 				cantEspacios=$((longVlrCompra-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_valCompra$strEspacios"|")
+				impProducto=$impProducto$(echo -e $prd_valCompra$strEspacios"\e[34m|\e[39m")
 
 				#---------------------------------------
 				# Impresión del valor compra
@@ -933,18 +1305,25 @@ fun_ListarProductos(){
 				cantEspacios=$((longVlrCompra-cantEspacios))
 				strEspacios=""
 				funEspacios $cantEspacios
-				impProducto=$impProducto$(echo $prd_valVenta$strEspacios"|")
-
-				echo "		"$impProducto	
+				impProducto=$impProducto$(echo -e $prd_valVenta$strEspacios"\e[34m|\e[39m")
+				if [[ $swCategoria = 1 && $codigoCategoria = $prd_codCat ]];
+				then
+					echo "		"$impProducto
+					contProducto=$((contProducto+1))
+				elif [ $swCategoria = 0 ];
+				then
+					echo "		"$impProducto
+					contProducto=$((contProducto+1))
+				fi
 			fi
-		done < $Productos
+		done < $txtProductos
 	fi
-	if [ $swExiste = 0 ];
+	if [[ $swExiste = 0 || $contProducto = 0 ]];
 	then
-		echo "		|                                   NO HAY PRODUCTOS QUE MOSTRAR                                       |"
+		echo -e "\e[34m		|\e[39m                                   NO HAY PRODUCTOS QUE MOSTRAR                                       \e[34m|\e[39m"
 		swCiclo=0
 	fi
-	echo "		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+	echo -e "\e[34m		~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\e[39m"
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -955,8 +1334,42 @@ funEspacios(){
 	cantEspacios=$1
 	for (( i=1; i<=$cantEspacios; i++ ))
 	do 
-		strEspacios=$(echo -e $strEspacios"·")
+		##strEspacios=$strEspacios" "
+		strEspacios=$(echo -e $strEspacios"\e[30m·\e[39m")
 	done
+}
+
+#/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
+# Función que registra el log de las operaciones criticas
+#\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/
+#----------------------------------------------
+# TRAMA:
+# fecha|acción|trama|usr|pass
+#----------------------------------------------
+#
+# ACCIONES:
+#	-------------------------------------
+#	| # acción 	| Detalle				|
+#	-------------------------------------
+#	| 1			| Crear Producto 		|
+#	| 2			| Editar Producto 		|
+#	| 3			| Eliminar Producto		|
+#	| 4			| Crear Categoría		|
+#	| 5			| Editar Categoría		|
+#	| 6			| Eliminar Categoría	|
+#	| 7			| Adicionar Inventario	|
+#	| 8			| Disminuir Inventario	|
+#	-------------------------------------
+#
+#----------------------------------------------
+fun_RegistrarLog(){
+	#$strUsuario
+	#$strPass
+	dia=`date +"%Y%m%d"`
+	hora=`date +"%H:%M"`
+	strAccion=$1
+	strTrama=$2
+	echo $dia$hora"|"$strAccion"|"$strTrama"|"$strUsuario"|"$strPass
 }
 
 #/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\
@@ -972,16 +1385,20 @@ hora=`date +"%H:%M"`
 #-----------------------------------------------------------
 #Definición de variables necesarias
 #-----------------------------------------------------------
-Log="LogProceso.log"
-Productos="Productos.txt"
-Categorias="Categorias.txt"
-Usuarios="Usuarios.txt"
-valMinimo=10000
-indExisteProd=0
-indUsuarioVal=-1
-indExisteCate=0
-strNomCategoria=0
-strCodCategoria=0
+#-----------------------------------
+# Nombres de archivos
+#-----------------------------------
+txtLog="LogProceso.log"
+txtProductos="Productos.txt"
+txtCategorias="Categorias.txt"
+txtUsuarios="Usuarios.txt"
+txtCompras="Compras.txt"
+txtVentas="Ventas.txt"
+txtAuxiliarV="auxiliarV.txt"
+txtAuxiliarB="auxiliarB.txt"
+#-----------------------------------
+# Parametros
+#-----------------------------------
 longCodigo=10
 longNomCategoria=15
 longNomProducto=25
@@ -989,7 +1406,12 @@ longGenero=8
 longCantidad=10
 longVlrCompra=11
 longVlrVenta=11
-categ=""
+valMinimo=10000
+longCompra=20
+longCliente=30
+#-----------------------------------
+# Resultados de consultas
+#-----------------------------------
 prd_Cod=""
 prd_codCat=""
 prd_nomCat=""
@@ -1002,20 +1424,29 @@ prd_activo=""
 cat_Cod=""
 cat_nombre=""
 cat_activo=""
+#-----------------------------------
+# Variables de apoyo
+#-----------------------------------
+indExisteProd=0
+indUsuarioVal=-1
+indExisteCate=0
+strNomCategoria=0
+strCodCategoria=0
+categ=""
 strEspacios=""
 swExiste=0
 
-echo "	############################################################"
-echo "	############################################################"
-echo "	######      ## ############ ########      ####### ##########"
-echo "	###### ####### ########## ### ##### ########### ### ########"
-echo "	######      ## ########## ### ##### ########### ### ########"
-echo "	###### ####### ########         ### #########         ######"
-echo "	###### ####### ######## ####### ### ######### ####### ######"
-echo "	###### #######      ## ######### ###      ## ######### #####"
-echo "	############################################################"
-echo "	############################################################"
-echo "	"
+echo -e "\e[93m	############################################################"
+echo -e "\e[93m	############################################################"
+echo -e "\e[93m	######      ## ############ ########      ####### ##########"
+echo -e "\e[93m	###### ####### ########## ### ##### ########### ### ########"
+echo -e "\e[93m	######      ## ########## ### ##### ########### ### ########"
+echo -e "\e[93m	###### ####### ########         ### #########         ######"
+echo -e "\e[93m	###### ####### ######## ####### ### ######### ####### ######"
+echo -e "\e[93m	###### #######      ## ######### ###      ## ######### #####"
+echo -e "\e[93m	############################################################"
+echo -e "\e[93m	############################################################"
+echo -e "\e[39m	"
 
 while [[ $indUsuarioVal = 0 || $indUsuarioVal = -1 ]]
 do
@@ -1029,8 +1460,8 @@ do
 		fun_MenuPrincipal $paso
 	elif [ $indUsuarioVal = 0 ];
 	then
-		echo "			{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
-		echo "			Usuario/Contraseña incorrecta"
-		echo "			{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+		echo -e "\e[91m			{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}"
+		echo -e "\e[39m			Usuario/Contraseña incorrecta"
+		echo -e "\e[91m			{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}{}\e[39m"
 	fi
 done
